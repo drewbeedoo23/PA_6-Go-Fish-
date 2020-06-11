@@ -30,5 +30,6 @@ int main(){
         //window.draw(board);
         //playerturn(activehand,passivehand,activecollection);
     //}
+    window.close();
     return 0;
 }
