@@ -109,6 +109,7 @@ class deck{
 
 class hand:public deck{
     public:
+        hand();
         card remove(int face);
         /*************************************************************
         * Function: remove()
@@ -131,13 +132,25 @@ class hand:public deck{
         *************************************************************/
         void display();
         bool check4ofakind(int face);
+        ~hand();
 };
 class collected:public deck{
     public:
+        collected();
         void display();
+        ~collected();
 };
 
-
+void playerturn(hand& activehand,hand& passivehand,collected& activecollection);
+        /*************************************************************
+        * Function: playerturn()
+        * Date Created:7/11/2020
+        * Date Last Modified: 7/11/2020
+        * Returns: nothing
+        * Description: performs the turn of the active player
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
 
 
 

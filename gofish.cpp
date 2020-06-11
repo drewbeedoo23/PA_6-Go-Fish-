@@ -4,7 +4,24 @@ deck::deck(){
     head=nullptr;
     numbercards=0;
 }
+void deck::empty(){
+    while(head!=nullptr){
+        pop();
+    }
+}
+hand::hand(){
+    deck();
+}
+collected::collected(){
+    collected();
+}
 deck::~deck(){
+    empty();
+}
+hand::~hand(){
+    empty();
+}
+collected::~collected(){
     empty();
 }
 void deck::push(card newdata){
@@ -67,11 +84,6 @@ void deck::swap(){
 void deck::shuffle(){
     for(int i=0;i<52;++i){
         swap();
-    }
-}
-void deck::empty(){
-    while(head!=nullptr){
-        pop();
     }
 }
 bool hand::check4ofakind(int face){
