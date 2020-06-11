@@ -4,6 +4,13 @@ deck::deck(){
     head=nullptr;
     numbercards=0;
 }
+card deck::pop(){
+    cardnode* ptr=head;
+    card temp=head->data;
+    head=head->next;
+    delete ptr;
+    return temp;
+}
 void deck::empty(){
     while(head!=nullptr){
         pop();
@@ -13,7 +20,7 @@ hand::hand(){
     deck();
 }
 collected::collected(){
-    collected();
+    deck();
 }
 deck::~deck(){
     empty();
@@ -27,7 +34,7 @@ collected::~collected(){
 void deck::push(card newdata){
     cardnode* newnode= new cardnode;
     newnode->data=newdata;
-    newnode->next=nullptr;
+    newnode->next=head;
     if(head==nullptr){
         head=newnode;
     }
@@ -57,11 +64,6 @@ void deck::initializefromfile(){
     }
 }
 
-card deck::pop(){
-    card temp=head->data;
-    head=head->next;
-    return temp;
-}
 
 void deck::swap(){
     int n1=0,n2=0;
