@@ -153,5 +153,5 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection);
         *************************************************************/
 
 
-
+#include "gofish.cpp"
 #endif
