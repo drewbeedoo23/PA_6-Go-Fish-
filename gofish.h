@@ -34,7 +34,7 @@ class deck{
         * Preconditions:
         * Postconditions:
         *************************************************************/
-        virtual void display();
+       // virtual void display();
         /*************************************************************
         * Function: display()
         * Date Created:7/10/2020
@@ -130,14 +130,14 @@ class hand:public deck{
         * Preconditions: 
         * Postconditions:
         *************************************************************/
-        void display();
+      //  void display();
         bool check4ofakind(int face);
         ~hand();
 };
 class collected:public deck{
     public:
         collected();
-        void display();
+        //void display();
         ~collected();
 };
 
