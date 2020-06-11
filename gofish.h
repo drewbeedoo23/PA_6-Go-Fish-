@@ -9,17 +9,17 @@
 using namespace std;
 
 struct card{
-    string name;//corresponds to file
-    int suit;
+    string filename;//corresponds to file
+    int face;
 };
 
 class deck{
     protected:
         struct cardnode{
             card data;
-            card* next;
+            cardnode* next;
         };
-        card* head;
+        cardnode* head;
         int numbercards;
     public:
         deck();
@@ -109,19 +109,28 @@ class deck{
 
 class hand:public deck{
     public:
-        card remove();
+        card remove(int face);
         /*************************************************************
         * Function: remove()
         * Date Created:7/10/2020
         * Date Last Modified: 7/10/2020
-        * Returns: 
+        * Returns: a card
         * Description: removes a card from the hand
-        * Preconditions:
+        * Preconditions: searchsuit returns true
+        * Postconditions:
+        *************************************************************/
+        bool searchface(int face);
+        /*************************************************************
+        * Function: searchsuit()
+        * Date Created:7/10/2020
+        * Date Last Modified: 7/10/2020
+        * Returns: a boolean value
+        * Description: searchs for a card with a specific face
+        * Preconditions: 
         * Postconditions:
         *************************************************************/
         void display();
-        void check4ofakind();
-        void display();
+        bool check4ofakind(int face);
 };
 class collected:public deck{
     public:

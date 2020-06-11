@@ -33,9 +33,9 @@ void deck::initializefromfile(){
     string temp;
     output.open("cards.csv",std::fstream::in);
     while(!output.eof()){
-        getline(output,newdata.name,',');
+        getline(output,newdata.filename,',');
         getline(output,temp);
-        istringstream(temp)>>newdata.suit;
+        istringstream(temp)>>newdata.face;
         push(newdata);
     }
 }
@@ -72,5 +72,49 @@ void deck::shuffle(){
 void deck::empty(){
     while(head!=nullptr){
         pop();
+    }
+}
+bool hand::check4ofakind(int face){
+    cardnode* temp=head;
+    int num=0;
+    while(temp!=nullptr){
+        if(face==temp->data.face)
+            ++num;
+        temp=temp->next;
+    }
+    if(num>=4){
+        return true;
+    }
+    return false;
+}
+bool hand::searchface(int face){
+    cardnode* temp=head;
+    while(temp!=nullptr){
+        if(face==temp->data.face){
+            return true;
+        }
+        temp=temp->next;
+    }
+    return false;
+}
+card hand::remove(int face){
+    cardnode*current=head;
+    cardnode*previous=head;
+    card storage;
+    if(head->data.face==face){
+        storage=head->data;
+        head=head->next;
+        delete current;
+        return storage;
+    }
+    while(current!=nullptr){
+        if(current->data.face==face){
+            storage=current->data;
+            previous->next=current->next;
+            delete current;
+            return storage;
+        }
+        previous=current;
+        current=current->next;
     }
 }
