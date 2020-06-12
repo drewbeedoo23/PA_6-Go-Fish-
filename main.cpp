@@ -27,7 +27,6 @@ int main(){
     window.draw(board);
     window.draw(deckback);
     p1.initializetexture();
-    p1.initializesprite();
     p1.display(window);
     //set loaction of deck
     //set loaction of collections
