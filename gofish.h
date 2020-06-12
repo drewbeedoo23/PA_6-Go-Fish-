@@ -6,11 +6,14 @@
 #include <sstream>
 #include <fstream>
 #include<SFML/Graphics.hpp> 
+#include <Mouse.hpp>
 using namespace std;
 
 struct card{
     string filename;//corresponds to file
     int face;
+    sf::Texture t1;
+    sf::Sprite cardsprite;
 };
 
 class deck{
@@ -22,8 +25,11 @@ class deck{
         cardnode* head;
         int numbercards;
     public:
+        void displaycards();
         deck();
         ~deck();
+        void initializetexture();
+        void initializesprite();
         void initializefromfile();
         /*************************************************************
         * Function: initializefromfile();
@@ -34,7 +40,7 @@ class deck{
         * Preconditions:
         * Postconditions:
         *************************************************************/
-       // virtual void display();
+        //void display();
         /*************************************************************
         * Function: display()
         * Date Created:7/10/2020
@@ -104,7 +110,7 @@ class deck{
         * Preconditions:
         * Postconditions:
         *************************************************************/
-       
+       int getnumcards(); 
 };
 
 class hand:public deck{
@@ -130,18 +136,27 @@ class hand:public deck{
         * Preconditions: 
         * Postconditions:
         *************************************************************/
-      //  void display();
+        void display(sf::RenderWindow& window);
+        /*************************************************************
+        * Function: display()
+        * Date Created:7/12/2020
+        * Date Last Modified: 7/12/2020
+        * Returns: nothing
+        * Description: displays each card in the hand
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
         bool check4ofakind(int face);
         ~hand();
 };
 class collected:public deck{
     public:
         collected();
-        //void display();
+     //   void display(Renderwindow& window);
         ~collected();
 };
 
-void playerturn(hand& activehand,hand& passivehand,collected& activecollection);
+void playerturn(hand& activehand,hand& passivehand,collected& activecollection,sf::RenderWindow &window);
         /*************************************************************
         * Function: playerturn()
         * Date Created:7/11/2020
@@ -152,6 +167,6 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection);
         * Postconditions:
         *************************************************************/
 
-
+bool checkwin(collected& p1, collected& p2);
 #include "gofish.cpp"
 #endif

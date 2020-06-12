@@ -35,13 +35,7 @@ void deck::push(card newdata){
     cardnode* newnode= new cardnode;
     newnode->data=newdata;
     newnode->next=head;
-    if(head==nullptr){
-        head=newnode;
-    }
-    else{
-        newnode->next=head;
-        head=newnode;
-    }
+    head=newnode;
     ++numbercards;
     return;
 }
@@ -55,12 +49,14 @@ void deck::initializefromfile(){
     fstream output;
     card newdata;
     string temp;
+    int i=0;
     output.open("cards.csv",std::fstream::in);
-    while(!output.eof()){
+    while(!output.eof()&&i<52){
         getline(output,newdata.filename,',');
         getline(output,temp);
         istringstream(temp)>>newdata.face;
         push(newdata);
+        ++i;
     }
 }
 
@@ -131,4 +127,117 @@ card hand::remove(int face){
         previous=current;
         current=current->next;
     }
+}
+void deck::initializesprite(){
+    cardnode* ptr=head;
+    int i=0;
+    while(ptr!=nullptr){
+        ptr->data.cardsprite.setTexture(ptr->data.t1);
+        ptr->data.cardsprite.setPosition((0+i*54),(0));
+        ptr->data.cardsprite.setScale(0.078148f,0.080492f);
+        ptr->next;
+        ++i;
+    }
+
+}
+void deck::initializetexture(){
+    cardnode* ptr=head;
+    while(ptr!=nullptr){
+        ptr->data.t1.loadFromFile(ptr->data.filename);
+        ptr->next;
+    }
+    initializesprite();
+}
+
+void hand::display(sf::RenderWindow& window){
+    cardnode* ptr=head;
+    while(ptr!=nullptr){
+        window.draw(ptr->data.cardsprite);
+        ptr=ptr->next;
+    }
+
+}
+
+/* void hand::display(sf::RenderWindow& window,int player,codenode* next){
+    sf::Texture current;
+    sf::Sprite card(current);
+    cardnode* ptr=nullptr;
+    if(next==nullptr){
+        ptr=head;
+    }
+    else{
+        ptr=next;
+    }
+    static int i=0;
+    current.loadFromFile(ptr->data.filename);
+    card.setTexture(current);
+    card.setScale(0.078148f,0.080492f);
+    if(player==1){
+        card.setPosition((0+i*54),(0));
+    }
+    else{
+        card.setPosition((0+i*54),(995));
+    }
+    window.draw(card);
+    window.display();
+    ptr=ptr->next;
+    ++i;   
+    if(ptr==nullptr||i<=52){
+        return;
+    }
+    display(window,player,ptr);
+    
+} */
+void deck::displaycards(){
+    cardnode* ptr=head;
+    while(head!=nullptr){
+        cout<<ptr->data.filename<<endl;
+        ptr=ptr->next;
+    }
+}
+int deck::getnumcards(){
+    return numbercards;
+}
+void playerturn(hand& activehand,hand& passivehand,collected& activecollection,deck& Deck,sf::RenderWindow &window){
+    int cont=1;
+    int hascard=0;
+    sf::Vector2i mpos;
+    card temp;
+    while(cont==1){
+        ///draw window, put in some text asking to choose a card
+        //display window
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            mpos=sf::Mouse::getPosition();
+            if(mpos.x>=0&&mpos.x<=(54*activehand.getnumcards()))
+                if(mpos.y>=0&&mpos.y<=(85*activehand.getnumcards())){
+                    //temp=returnbyint(mpos.x/54);
+                    //hascard=passivehand.check4ofkind(temp.face)
+                }
+        }
+    }
+    if(hascard==0){
+        //print and display gofish
+        activehand.push(Deck.pop());
+    }
+    else{
+        //removing cards from passive hand and adding to active hand
+        while(passivehand.searchface(temp.face)){//checks if they still have card
+            activehand.push(passivehand.remove(temp.face));//passive player gives active player the card
+        }
+       for(int i=1;i<14;++i){
+           if(activehand.check4ofakind(i)){
+               activecollection.push(activehand.remove(i));//if player has 4 of a kind for face i, add it to collection
+                while(activehand.check4ofakind(i)){//while they still have cards of that facce, remove them
+                activehand.remove(i);
+                }
+           }
+        }
+        
+    }
+}
+bool checkwin(collected& p1, collected& p2){
+    if((p1.getnumcards()+p2.getnumcards())<13){
+        return false;
+    }
+    return true;
 }
