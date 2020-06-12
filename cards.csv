@@ -1,52 +1,52 @@
-Ace of Spades,1
-Ace of Clubs,1
-Ace of Hearts,1
-Ace of Diamonds,1
-Two of Spades,2
-Two of Clubs,2
-Two of Hearts,2
-Two of Diamonds2,
-Three of Spades,3
-Three of Clubs,3
-Three of Hearts,3
-Three of Diamonds,3
-Four of Spades,4
-Four of Clubs,4
-Four of Hearts,4
-Four of Diamonds,4
-Five of Spades,5
-Five of Clubs,5
-Five of Hearts,5
-Five of Diamonds,5
-Six of Spades,6
-Six of Clubs,6
-Six of Hearts,6
-Six of Diamonds,6
-Seven of Spades,7
-Seven of Clubs,7
-Seven of Hearts,7
-Seven of Diamonds,7
-Eight of Spades,8
-Eight of Clubs,8
-Eight of Hearts,8
-Eight of Diamonds8,
-Nine of Spades,9
-Nine of Clubs,9
-Nine of Hearts,9
-Nine of Diamonds,9
-Ten of Spades,10
-Ten of Clubs,10
-Ten of Hearts,10
-Ten of Diamonds,10
-Jack of Spades,11
-Jack of Clubs,11
-Jack of Hearts,11
-Jack of Diamonds,11
-Queen of Spades,12
-Queen of Clubs,12
-Queen of Hearts,12
-Queen of Diamonds,12
-King of Spades,13
-King of Clubs,13
-King of Hearts,13
-King of Diamonds,13
+AS,1
+AC,1
+AH,1
+AD,1
+2S,2
+2C,2
+2H,2
+2D,2
+3S,3
+3C,3
+3H,3
+3D,3
+4S,4
+4C,4
+4H,4
+4D,4
+5S,5
+5C,5
+5H,5
+5D,5
+6S,6
+6C,6
+6H,6
+6D,6
+7S,7
+7C,7
+7H,7
+7D,7
+8S,8
+8C,8
+8H,8
+8D,8
+9S,9
+9C,9
+9H,9
+9D,9
+10S,10
+10C,10
+10H,10
+10D,10
+JS,11
+JC,11
+JH,11
+JD,11
+QS,12
+QC,12
+QH,12
+QD,12
+KS,13
+KC,13
+KH,13
+KD,13
