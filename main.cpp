@@ -27,9 +27,7 @@ int main(){
     window.draw(board);
     window.draw(deckback);
     p1.initializetexture();
-    p1.display(window);
-    //set loaction of deck
-    //set loaction of collections
+    //p1.display(window);
     window.display();
     cin.ignore().get(); 
     //while(window.isOpen()){

@@ -6,22 +6,20 @@
 #include <sstream>
 #include <fstream>
 #include<SFML/Graphics.hpp> 
-#include <Mouse.hpp>
+//#include <mouse.hpp>
 using namespace std;
 
 struct card{
     string filename;//corresponds to file
     int face;
-    sf::Texture t1;
-    sf::Sprite cardsprite;
+};
+struct cardnode{
+    card data;
+    cardnode* next;
 };
 
 class deck{
     protected:
-        struct cardnode{
-            card data;
-            cardnode* next;
-        };
         cardnode* head;
         int numbercards;
     public:

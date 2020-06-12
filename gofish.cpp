@@ -128,66 +128,7 @@ card hand::remove(int face){
         current=current->next;
     }
 }
-void deck::initializesprite(){
-    cardnode* ptr=head;
-    int i=0;
-    while(ptr!=nullptr){
-        ptr->data.cardsprite.setTexture(ptr->data.t1);
-        ptr->data.cardsprite.setPosition((0+i*54),(0));
-        ptr->data.cardsprite.setScale(0.078148f,0.080492f);
-        ptr->next;
-        ++i;
-    }
 
-}
-void deck::initializetexture(){
-    cardnode* ptr=head;
-    while(ptr!=nullptr){
-        ptr->data.t1.loadFromFile(ptr->data.filename);
-        ptr->next;
-    }
-    initializesprite();
-}
-
-void hand::display(sf::RenderWindow& window){
-    cardnode* ptr=head;
-    while(ptr!=nullptr){
-        window.draw(ptr->data.cardsprite);
-        ptr=ptr->next;
-    }
-
-}
-
-/* void hand::display(sf::RenderWindow& window,int player,codenode* next){
-    sf::Texture current;
-    sf::Sprite card(current);
-    cardnode* ptr=nullptr;
-    if(next==nullptr){
-        ptr=head;
-    }
-    else{
-        ptr=next;
-    }
-    static int i=0;
-    current.loadFromFile(ptr->data.filename);
-    card.setTexture(current);
-    card.setScale(0.078148f,0.080492f);
-    if(player==1){
-        card.setPosition((0+i*54),(0));
-    }
-    else{
-        card.setPosition((0+i*54),(995));
-    }
-    window.draw(card);
-    window.display();
-    ptr=ptr->next;
-    ++i;   
-    if(ptr==nullptr||i<=52){
-        return;
-    }
-    display(window,player,ptr);
-    
-} */
 void deck::displaycards(){
     cardnode* ptr=head;
     while(head!=nullptr){
