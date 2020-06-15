@@ -26,8 +26,6 @@ class deck{
         void displaycards();
         deck();
         ~deck();
-        void initializetexture();
-        void initializesprite();
         void initializefromfile();
         /*************************************************************
         * Function: initializefromfile();
@@ -38,7 +36,7 @@ class deck{
         * Preconditions:
         * Postconditions:
         *************************************************************/
-        //void display();
+        void draw(sf::RenderWindow& window);
         /*************************************************************
         * Function: display()
         * Date Created:7/10/2020
@@ -109,6 +107,7 @@ class deck{
         * Postconditions:
         *************************************************************/
        int getnumcards(); 
+       card returnbyint(int n);
 };
 
 class hand:public deck{
@@ -134,18 +133,46 @@ class hand:public deck{
         * Preconditions: 
         * Postconditions:
         *************************************************************/
-        void display(sf::RenderWindow& window);
+        void draw(sf::RenderWindow& window);
+        void draw(cardnode* ptr,sf::RenderWindow& window);
+        /*************************************************************
+        * Function: draw()
+        * Date Created:7/12/2020
+        * Date Last Modified: 7/12/2020
+        * Returns: nothing
+        * Description: draws cards in window
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
+        void drawbacks(sf::RenderWindow& window);
+        void drawbacks(cardnode* ptr, sf::RenderWindow& window);
+        int check4ofakind(int face);
+        /*************************************************************
+        * Function: check4ofakind()
+        * Date Created:7/12/2020
+        * Date Last Modified: 7/12/2020
+        * Returns: a boolean value
+        * Description: checks if a player has 4 of a kind
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
+        ~hand();
+        void display(){
+            cardnode* ptr=head;
+            while(ptr!=nullptr){
+                cout<<ptr->data.filename<<endl;
+                ptr=ptr->next;
+            }
+        }
         /*************************************************************
         * Function: display()
         * Date Created:7/12/2020
         * Date Last Modified: 7/12/2020
         * Returns: nothing
-        * Description: displays each card in the hand
+        * Description: displays cards in text box
         * Preconditions: 
         * Postconditions:
         *************************************************************/
-        bool check4ofakind(int face);
-        ~hand();
 };
 class collected:public deck{
     public:
@@ -154,7 +181,7 @@ class collected:public deck{
         ~collected();
 };
 
-void playerturn(hand& activehand,hand& passivehand,collected& activecollection,sf::RenderWindow &window);
+void playerturn(hand& activehand,hand& passivehand,collected& activecollection,deck& Deck,sf::RenderWindow &window,int player);
         /*************************************************************
         * Function: playerturn()
         * Date Created:7/11/2020

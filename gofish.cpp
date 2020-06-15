@@ -84,7 +84,7 @@ void deck::shuffle(){
         swap();
     }
 }
-bool hand::check4ofakind(int face){
+int hand::check4ofakind(int face){
     cardnode* temp=head;
     int num=0;
     while(temp!=nullptr){
@@ -93,9 +93,9 @@ bool hand::check4ofakind(int face){
         temp=temp->next;
     }
     if(num>=4){
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
 }
 bool hand::searchface(int face){
     cardnode* temp=head;
@@ -139,20 +139,106 @@ void deck::displaycards(){
 int deck::getnumcards(){
     return numbercards;
 }
-void playerturn(hand& activehand,hand& passivehand,collected& activecollection,deck& Deck,sf::RenderWindow &window){
+//
+void deck::draw(sf::RenderWindow& window){
+    sf::Texture back;
+    back.loadFromFile("gray_back.png");
+    sf::Sprite deckback(back);
+    deckback.setPosition(100,342);
+    deckback.setScale(0.078148f,0.080492f);
+    window.draw(deckback);
+    
+}
+void hand::draw(cardnode* ptr,sf::RenderWindow& window){
+    static int i =0;
+    if(ptr==nullptr||i>numbercards){
+        return;
+    }
+    sf::Texture t;
+    t.loadFromFile(ptr->data.filename);
+    sf::Sprite carddisplay(t);
+    carddisplay.setScale(0.078148f,0.080492f);
+    carddisplay.setPosition((i*54),(0));
+    window.draw(carddisplay);
+    draw(ptr->next,window);
+}
+void hand::draw(sf::RenderWindow& window){
+    static int i =1;
+    if(head==nullptr||i>numbercards){
+        return;
+    }
+    sf::Texture t;
+    t.loadFromFile(head->data.filename);
+    sf::Sprite carddisplay(t);
+    carddisplay.setTexture(t);
+    carddisplay.setScale(0.078148f,0.080492f);
+    carddisplay.setPosition((i*54),(0));
+    window.draw(carddisplay);
+    ++i;
+    draw(head->next,window);
+}
+void hand::drawbacks(sf::RenderWindow& window){
+    static int i =1;
+    if(head==nullptr||i>numbercards){
+        return;
+    }
+    sf::Texture t;
+    t.loadFromFile("gray_back.png");
+    sf::Sprite carddisplay(t);
+    carddisplay.setScale(0.078148f,0.080492f);
+    carddisplay.setPosition((1366-(1+i)*54),(683));
+    window.draw(carddisplay);
+    ++i;
+    drawbacks(head->next,window);
+
+}
+void hand::drawbacks(cardnode* ptr, sf::RenderWindow& window){
+    static int i =0;
+    if(ptr==nullptr||i>numbercards){
+        return;
+    }
+    sf::Texture t;
+    t.loadFromFile("gray_back.png");
+    sf::Sprite carddisplay(t);
+    carddisplay.setScale(0.078148f,0.080492f);
+    carddisplay.setPosition((1366-(1+i)*54),(683));
+    window.draw(carddisplay);
+    draw(ptr->next,window);
+
+}
+card deck::returnbyint(int n){
+    int i=0;
+    cardnode* ptr=head;
+    while(i<n&&i<numbercards){
+    ptr=ptr->next;
+     ++i;   
+    }
+    return ptr->data;
+}
+//
+void playerturn(hand& activehand,hand& passivehand,collected& activecollection,deck& Deck,sf::RenderWindow &window,int player){
     int cont=1;
     int hascard=0;
     sf::Vector2i mpos;
     card temp;
+    cout<<"P1"<<endl;
+    activehand.display();
+    cout<<"\nP2\n";
+    passivehand.display();
     while(cont==1){
         ///draw window, put in some text asking to choose a card
+        Deck.draw(window);
+        activehand.draw(window);
+        passivehand.drawbacks(window);
+        window.display();
         //display window
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
             mpos=sf::Mouse::getPosition();
-            if(mpos.x>=0&&mpos.x<=(54*activehand.getnumcards()))
+            if(mpos.x>=0&&mpos.x<=(54))
                 if(mpos.y>=0&&mpos.y<=(85*activehand.getnumcards())){
-                    //temp=returnbyint(mpos.x/54);
-                    //hascard=passivehand.check4ofkind(temp.face)
+                    temp=activehand.returnbyint(mpos.x/54);
+                    hascard=passivehand.check4ofakind(temp.face);
+                    cont=0;
                 }
         }
     }

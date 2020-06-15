@@ -24,18 +24,17 @@ int main(){
     deckback.setPosition(100,342);
     deckback.setScale(0.078148f,0.080492f);
     board.setPosition(0,0);
-    window.draw(board);
-    window.draw(deckback);
-    p1.initializetexture();
-    //p1.display(window);
-    window.display();
-    cin.ignore().get(); 
-    //while(window.isOpen()){
-        //window.draw(board);
+    //p1.draw(1,window);
+    //window.draw(board);
+    //Deck.draw(window);
+    //window.display();
+    while(window.isOpen()){
+        window.draw(board);
+        playerturn(p1,p2,p1coll,Deck,window,1);
         //playerturn(activehand,passivehand,activecollection,window,1);
         //intermediate checks
         //playerturn()
-    //}
+    }
     window.close();
     return 0;
 }
