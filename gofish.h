@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <unistd.h>
 #include<SFML/Graphics.hpp> 
 //#include <mouse.hpp>
 using namespace std;

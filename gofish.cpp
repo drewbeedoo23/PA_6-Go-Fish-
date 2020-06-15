@@ -150,36 +150,41 @@ void deck::draw(sf::RenderWindow& window){
     
 }
 void hand::draw(cardnode* ptr,sf::RenderWindow& window){
-    static int i =0;
+    static int i =1;
     if(ptr==nullptr||i>numbercards){
         return;
     }
     sf::Texture t;
     t.loadFromFile(ptr->data.filename);
-    sf::Sprite carddisplay(t);
-    carddisplay.setScale(0.078148f,0.080492f);
-    carddisplay.setPosition((i*54),(0));
-    window.draw(carddisplay);
-    draw(ptr->next,window);
-}
-void hand::draw(sf::RenderWindow& window){
-    static int i =1;
-    if(head==nullptr||i>numbercards){
-        return;
-    }
-    sf::Texture t;
-    t.loadFromFile(head->data.filename);
+    cout << "Printing Card: " << ptr->data.filename << endl;
     sf::Sprite carddisplay(t);
     carddisplay.setTexture(t);
     carddisplay.setScale(0.078148f,0.080492f);
     carddisplay.setPosition((i*54),(0));
     window.draw(carddisplay);
     ++i;
-    draw(head->next,window);
+    ptr = ptr->next;
+    draw(ptr,window);
+}
+void hand::draw(sf::RenderWindow& window){
+    cardnode* temp = head;
+    if(temp==nullptr){
+        return;
+    }
+    sf::Texture t;
+    t.loadFromFile(temp->data.filename);
+    cout << "Printing Card: " << temp->data.filename << endl;
+    sf::Sprite carddisplay(t);
+    carddisplay.setTexture(t);
+    carddisplay.setScale(0.078148f,0.080492f);
+    carddisplay.setPosition((0),(0));
+    window.draw(carddisplay);
+    temp = temp->next;
+    draw(temp,window);
 }
 void hand::drawbacks(sf::RenderWindow& window){
-    static int i =1;
-    if(head==nullptr||i>numbercards){
+    for(int i = 0; i<numbercards; i++){
+    if(numbercards == 0){
         return;
     }
     sf::Texture t;
@@ -188,24 +193,11 @@ void hand::drawbacks(sf::RenderWindow& window){
     carddisplay.setScale(0.078148f,0.080492f);
     carddisplay.setPosition((1366-(1+i)*54),(683));
     window.draw(carddisplay);
-    ++i;
-    drawbacks(head->next,window);
-
-}
-void hand::drawbacks(cardnode* ptr, sf::RenderWindow& window){
-    static int i =0;
-    if(ptr==nullptr||i>numbercards){
-        return;
     }
-    sf::Texture t;
-    t.loadFromFile("gray_back.png");
-    sf::Sprite carddisplay(t);
-    carddisplay.setScale(0.078148f,0.080492f);
-    carddisplay.setPosition((1366-(1+i)*54),(683));
-    window.draw(carddisplay);
-    draw(ptr->next,window);
+    
 
 }
+
 card deck::returnbyint(int n){
     int i=0;
     cardnode* ptr=head;
