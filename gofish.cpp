@@ -60,7 +60,6 @@ void deck::initializefromfile(){
     }
 }
 
-
 void deck::swap(){
     int n1=0,n2=0;
     card temp;
@@ -181,6 +180,51 @@ void hand::draw(sf::RenderWindow& window){
     temp = temp->next;
     draw(temp,window);
 }
+
+void collected::draw(sf::RenderWindow&window, int player, cardnode*ptr){
+    static int i =1;
+    if(ptr==nullptr||i>numbercards){
+        i=1;
+        return;
+    }
+    sf::Texture t;
+    t.loadFromFile(ptr->data.filename);
+    sf::Sprite carddisplay(t);
+    carddisplay.setTexture(t);
+    carddisplay.setScale(0.078148f,0.080492f);
+    if(player==1){//activeplayer
+    carddisplay.setPosition((54+i*54),(190));
+    }
+    else{
+    carddisplay.setPosition((1258-i*54),(513));
+    }
+    window.draw(carddisplay);
+    ++i;
+    ptr = ptr->next;
+    draw(window, player, ptr);
+
+}
+void collected::draw(sf::RenderWindow&window,int player){
+    cardnode* temp = head;
+    if(temp==nullptr){
+        return;
+    }
+    sf::Texture t;
+    t.loadFromFile(temp->data.filename);
+    sf::Sprite carddisplay(t);
+    carddisplay.setTexture(t);
+    carddisplay.setScale(0.078148f,0.080492f);
+    if(player==1){//activeplayer
+    carddisplay.setPosition((54),(190));
+    }
+    else{
+    carddisplay.setPosition((1258),(513));
+    }
+    window.draw(carddisplay);
+    temp = temp->next;
+    draw(window, player, temp);
+
+}
 void hand::drawbacks(sf::RenderWindow& window){
     for(int i = 0; i<numbercards; i++){
     if(numbercards == 0){
@@ -197,6 +241,7 @@ void hand::drawbacks(sf::RenderWindow& window){
 
 }
 
+
 card deck::returnbyint(int n){
     int i=0;
     cardnode* ptr=head;
@@ -207,7 +252,7 @@ card deck::returnbyint(int n){
     return ptr->data;
 }
 //
-void playerturn(hand& activehand,hand& passivehand,collected& activecollection,deck& Deck,sf::RenderWindow &window,int player){
+void playerturn(hand& activehand,hand& passivehand,collected& activecollection,collected& passivecollection, deck& Deck,sf::RenderWindow &window,int player){
     int cont=1;
     int n =0;
     bool hascard=false;
@@ -248,6 +293,8 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
         }
         window.draw(text);
         passivehand.drawbacks(window);
+        activecollection.draw(window,1);
+        passivecollection.draw(window,2);
         window.display();
         //display window
         while(window.pollEvent(userinput)){

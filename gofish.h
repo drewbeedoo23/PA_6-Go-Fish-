@@ -180,9 +180,11 @@ class collected:public deck{
         collected();
      //   void display(Renderwindow& window);
         ~collected();
+        void draw(sf::RenderWindow&window, int player, cardnode*ptr);
+        void draw(sf::RenderWindow&window,int player);
 };
 
-void playerturn(hand& activehand,hand& passivehand,collected& activecollection,deck& Deck,sf::RenderWindow &window,int player);
+void playerturn(hand& activehand,hand& passivehand,collected& activecollection,collected& passivecollection, deck& Deck,sf::RenderWindow &window,int player);
         /*************************************************************
         * Function: playerturn()
         * Date Created:7/11/2020
