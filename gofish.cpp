@@ -247,7 +247,21 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
     }
     if(hascard==0){
         //print and display gofish
-        activehand.push(Deck.pop());
+        text.setString("Go Fish!");//draw objects
+        window.draw(text);
+        Deck.draw(window);
+        activehand.draw(window);
+        passivehand.drawbacks(window);
+        window.display();//display
+        pause();//pause
+        activehand.push(Deck.pop());//add card to hand
+        text.setString("Go Fish!");//draw&display&pause
+        window.draw(text);
+        Deck.draw(window);
+        activehand.draw(window);
+        passivehand.drawbacks(window);
+        window.display();
+        pause();
     }
     else{
         //removing cards from passive hand and adding to active hand
