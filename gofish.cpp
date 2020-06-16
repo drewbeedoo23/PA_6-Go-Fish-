@@ -290,7 +290,6 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
         activehand.draw(window);
         passivehand.drawbacks(window);
         window.display();
-        pause();
     }
     else{
         //removing cards from passive hand and adding to active hand
@@ -304,17 +303,16 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
         activehand.draw(window);
         passivehand.drawbacks(window);
         window.display();
+        
+    }
        for(int i=1;i<14;++i){
            if(activehand.check4ofakind(i)){
                activecollection.push(activehand.remove(i));//if player has 4 of a kind for face i, add it to collection
-                while(activehand.check4ofakind(i)){//while they still have cards of that facce, remove them
+                while(activehand.searchface(i)){//while they still have cards of that facce, remove them
                 activehand.remove(i);
                 }
            }
         }
-        pause();
-        
-    }
 }
 bool checkwin(collected& p1, collected& p2){
     if((p1.getnumcards()+p2.getnumcards())<13){

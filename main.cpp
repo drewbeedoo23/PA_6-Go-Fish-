@@ -21,16 +21,14 @@ int main(){
     board.setTexture(&felt);
     board.setPosition(0,0);
     while(window.isOpen()){
-        window.draw(board);
         playerturn(p1,p2,p1coll,Deck,window,1);
-        //while(checkwin(p1coll,p2coll)){
-            //playerturn(p1,p2,p1coll,Deck,window,1);
-            //if(checkwin(p1coll,p2coll)){
-               // break;
-            //}
-            //playerturn(p2,p1,p2coll,Deck,window,2);
-        //}
-        //
+        if(checkwin(p1coll,p2coll));{
+            //endgame
+        }
+        playerturn(p2,p1,p2coll,Deck,window,2);
+        if(checkwin(p1coll,p2coll));{
+            //endgame
+        }
     }
     window.close();
     return 0;
