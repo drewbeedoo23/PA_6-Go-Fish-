@@ -152,11 +152,11 @@ void deck::draw(sf::RenderWindow& window){
 void hand::draw(cardnode* ptr,sf::RenderWindow& window){
     static int i =1;
     if(ptr==nullptr||i>numbercards){
+        i=1;
         return;
     }
     sf::Texture t;
     t.loadFromFile(ptr->data.filename);
-    cout << "Printing Card: " << ptr->data.filename << endl;
     sf::Sprite carddisplay(t);
     carddisplay.setTexture(t);
     carddisplay.setScale(0.078148f,0.080492f);
@@ -173,7 +173,6 @@ void hand::draw(sf::RenderWindow& window){
     }
     sf::Texture t;
     t.loadFromFile(temp->data.filename);
-    cout << "Printing Card: " << temp->data.filename << endl;
     sf::Sprite carddisplay(t);
     carddisplay.setTexture(t);
     carddisplay.setScale(0.078148f,0.080492f);
@@ -212,15 +211,27 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
     int cont=1;
     int hascard=0;
     sf::Vector2i mpos;
+    sf::Text text;
+    sf::Font font;
+    font.loadFromFile("Amatic-Bold.ttf");
+    text.setFont(font);
+    text.setCharacterSize(50);
+    text.setFillColor(sf::Color::Black);
+    text.setStyle(sf::Text::Regular);
+    text.setPosition(400,340);
     card temp;
-    cout<<"P1"<<endl;
-    activehand.display();
-    cout<<"\nP2\n";
-    passivehand.display();
     while(cont==1){
         ///draw window, put in some text asking to choose a card
         Deck.draw(window);
         activehand.draw(window);
+        if(player==1){
+            text.setString("Player 1's turn, choose a card...");
+        }
+        else
+        {
+            text.setString("Player 2's turn, choose a card...");
+        }
+        window.draw(text);
         passivehand.drawbacks(window);
         window.display();
         //display window
