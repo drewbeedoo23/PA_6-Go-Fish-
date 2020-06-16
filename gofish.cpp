@@ -209,7 +209,8 @@ card deck::returnbyint(int n){
 //
 void playerturn(hand& activehand,hand& passivehand,collected& activecollection,deck& Deck,sf::RenderWindow &window,int player){
     int cont=1;
-    int hascard=0;
+    int n =0;
+    bool hascard=false;
     sf::Vector2i mpos;
     sf::Text text;
     sf::Font font;
@@ -254,8 +255,10 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
                 if(userinput.mouseButton.button==sf::Mouse::Left){
                     if(userinput.mouseButton.x>=0&&userinput.mouseButton.x<=(54*activehand.getnumcards())){
                         if(userinput.mouseButton.y>=0&&userinput.mouseButton.y<=(85)){
-                            temp=activehand.returnbyint(mpos.x/54);
+                            n=userinput.mouseButton.x/54;
+                            temp=activehand.returnbyint(n);
                             hascard=passivehand.searchface(temp.face);
+                            cout<<endl<<n<<"  "<<temp.filename<<endl;
                             cont=0;
                             //window.close();
                         }
@@ -275,20 +278,13 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
                 }
             }*/
     }
-    if(hascard==0){
+    if(!hascard){
         //print and display gofish
         window.clear();
-        window.display();
-        window.draw(board);
-        text.setString("Go Fish!");//draw objects
-        window.draw(text);
-        Deck.draw(window);
-        activehand.draw(window);
-        passivehand.drawbacks(window);
-        window.display();//display
-        pause();//pause
+       
         activehand.push(Deck.pop());//add card to hand
         text.setString("Go Fish!");//draw&display&pause
+        window.draw(board);
         window.draw(text);
         Deck.draw(window);
         activehand.draw(window);
@@ -301,6 +297,13 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
         while(passivehand.searchface(temp.face)){//checks if they still have card
             activehand.push(passivehand.remove(temp.face));//passive player gives active player the card
         }
+        text.setString("The other player had some!");
+        window.draw(board);
+        window.draw(text);
+        Deck.draw(window);
+        activehand.draw(window);
+        passivehand.drawbacks(window);
+        window.display();
        for(int i=1;i<14;++i){
            if(activehand.check4ofakind(i)){
                activecollection.push(activehand.remove(i));//if player has 4 of a kind for face i, add it to collection
@@ -309,6 +312,7 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
                 }
            }
         }
+        pause();
         
     }
 }
