@@ -8,6 +8,7 @@ card deck::pop(){
     cardnode* ptr=head;
     card temp=head->data;
     head=head->next;
+    --numbercards;
     delete ptr;
     return temp;
 }
@@ -91,7 +92,7 @@ int hand::check4ofakind(int face){
             ++num;
         temp=temp->next;
     }
-    if(num>=4){
+    if(num==4){
         return 1;
     }
     return 0;
@@ -113,6 +114,7 @@ card hand::remove(int face){
     if(head->data.face==face){
         storage=head->data;
         head=head->next;
+        --numbercards;
         delete current;
         return storage;
     }
@@ -120,12 +122,15 @@ card hand::remove(int face){
         if(current->data.face==face){
             storage=current->data;
             previous->next=current->next;
+            cout<<"card removed\n";
+            --numbercards;
             delete current;
             return storage;
         }
         previous=current;
         current=current->next;
     }
+
 }
 
 void deck::displaycards(){
@@ -313,24 +318,17 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
                 }
             }
         }
-            //below is code to pick up inputs that we tried previously
-            /*if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                mpos=sf::Mouse::getPosition();
-                if(mpos.x>=0&&mpos.x<=(54)){
-                    if(mpos.y>=0&&mpos.y<=(85*activehand.getnumcards())){
-                        temp=activehand.returnbyint(mpos.x/54);
-                        hascard=passivehand.searchface(temp.face);
-                        window.close();
-                    }
-                }
-            }*/
     }
     if(!hascard){
         //print and display gofish
         window.clear();
-       
-        activehand.push(Deck.pop());//add card to hand
-        text.setString("Go Fish!");//draw&display&pause
+       if(!Deck.isEmpty()){
+        text.setString("Go Fish! Press Enter to continue:");
+        activehand.push(Deck.pop());
+        }//add card to hand
+        else{
+        text.setString("Go Fish! The Deck is empty! Press Enter to continue:");
+        }//draw&display&pause
         window.draw(board);
         window.draw(text);
         Deck.draw(window);
@@ -343,7 +341,7 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
         while(passivehand.searchface(temp.face)){//checks if they still have card
             activehand.push(passivehand.remove(temp.face));//passive player gives active player the card
         }
-        text.setString("The other player had some!");
+        text.setString("The other player had some! Press Enter to continue:");
         window.draw(board);
         window.draw(text);
         Deck.draw(window);
@@ -354,12 +352,35 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
     }
        for(int i=1;i<14;++i){
            if(activehand.check4ofakind(i)){
+               cout<<"4ofkind dectected\n";
                activecollection.push(activehand.remove(i));//if player has 4 of a kind for face i, add it to collection
                 while(activehand.searchface(i)){//while they still have cards of that facce, remove them
                 activehand.remove(i);
                 }
            }
         }
+    cont=1;
+    while(window.isOpen()){
+        if(cont==0){
+            break;
+        }
+        window.draw(board);
+        window.draw(text);
+        Deck.draw(window);
+        activehand.draw(window);
+        passivehand.drawbacks(window);
+        window.display();
+        while(window.pollEvent(userinput)){
+            if(userinput.type==sf::Event::KeyPressed){
+                cout<<"Key Pressed\n";
+                if(userinput.key.code==sf::Keyboard::Return){
+                    cont=0;
+                    cout<<"Enter Pressed\n";
+                }
+            }
+        }
+
+    }
 }
 bool checkwin(collected& p1, collected& p2){
     if((p1.getnumcards()+p2.getnumcards())<13){
