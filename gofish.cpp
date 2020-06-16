@@ -213,15 +213,29 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
     sf::Vector2i mpos;
     sf::Text text;
     sf::Font font;
+    sf::Texture felt;
+    felt.loadFromFile("felttable.png");
+    sf::RectangleShape board(sf::Vector2f(1366.f,768.f));
+    board.setTexture(&felt);
+    board.setPosition(0,0);
+    sf::Event userinput;
     font.loadFromFile("Amatic-Bold.ttf");
     text.setFont(font);
     text.setCharacterSize(50);
     text.setFillColor(sf::Color::Black);
     text.setStyle(sf::Text::Regular);
     text.setPosition(400,340);
+    cout<<"Active Player\n";
+    activehand.display();
+    cout<<"Passive Player\n";
+    passivehand.display();
     card temp;
-    while(cont==1){
+    while(window.isOpen()){
         ///draw window, put in some text asking to choose a card
+        if(cont==0){
+            break;
+        }
+        window.draw(board);
         Deck.draw(window);
         activehand.draw(window);
         if(player==1){
@@ -235,18 +249,37 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,d
         passivehand.drawbacks(window);
         window.display();
         //display window
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-            mpos=sf::Mouse::getPosition();
-            if(mpos.x>=0&&mpos.x<=(54))
-                if(mpos.y>=0&&mpos.y<=(85*activehand.getnumcards())){
-                    temp=activehand.returnbyint(mpos.x/54);
-                    hascard=passivehand.check4ofakind(temp.face);
-                    cont=0;
+        while(window.pollEvent(userinput)){
+            if(userinput.type==sf::Event::MouseButtonPressed){
+                if(userinput.mouseButton.button==sf::Mouse::Left){
+                    if(userinput.mouseButton.x>=0&&userinput.mouseButton.x<=(54*activehand.getnumcards())){
+                        if(userinput.mouseButton.y>=0&&userinput.mouseButton.y<=(85)){
+                            temp=activehand.returnbyint(mpos.x/54);
+                            hascard=passivehand.searchface(temp.face);
+                            cont=0;
+                            //window.close();
+                        }
+                    }
                 }
+            }
         }
+            //below is code to pick up inputs that we tried previously
+            /*if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                mpos=sf::Mouse::getPosition();
+                if(mpos.x>=0&&mpos.x<=(54)){
+                    if(mpos.y>=0&&mpos.y<=(85*activehand.getnumcards())){
+                        temp=activehand.returnbyint(mpos.x/54);
+                        hascard=passivehand.searchface(temp.face);
+                        window.close();
+                    }
+                }
+            }*/
     }
     if(hascard==0){
         //print and display gofish
+        window.clear();
+        window.display();
+        window.draw(board);
         text.setString("Go Fish!");//draw objects
         window.draw(text);
         Deck.draw(window);

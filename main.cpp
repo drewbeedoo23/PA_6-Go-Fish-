@@ -16,15 +16,20 @@ int main(){
         p2.push(Deck.pop());
     } 
     sf::RenderWindow window(sf::VideoMode(1366,768),"Go Fish!");
+    window.setFramerateLimit(60);
     sf::RectangleShape board(sf::Vector2f(1366.f,768.f));
     board.setTexture(&felt);
     board.setPosition(0,0);
     while(window.isOpen()){
         window.draw(board);
-        playerturn(p1,p2,p1coll,Deck,window,1);
-        //playerturn(activehand,passivehand,activecollection,window,1);
-        //intermediate checks
-        //playerturn()
+        while(checkwin(p1coll,p2coll)){
+            playerturn(p1,p2,p1coll,Deck,window,1);
+            if(checkwin(p1coll,p2coll)){
+                break;
+            }
+            playerturn(p2,p1,p2coll,Deck,window,2);
+        }
+        //
     }
     window.close();
     return 0;
