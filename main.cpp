@@ -1,5 +1,9 @@
 #include "gofish.h"
 
+/*Below is the github link
+https://github.com/drewbeedoo23/PA_6-Go-Fish-
+*/
+
 int main(){
     deck Deck;
     hand p1, p2;
