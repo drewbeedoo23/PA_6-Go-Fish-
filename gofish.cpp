@@ -122,7 +122,6 @@ card hand::remove(int face){
         if(current->data.face==face){
             storage=current->data;
             previous->next=current->next;
-            cout<<"card removed\n";
             --numbercards;
             delete current;
             return storage;
@@ -285,10 +284,6 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
     text.setFillColor(sf::Color::Black);
     text.setStyle(sf::Text::Regular);
     text.setPosition(400,340);
-    cout<<"Active Player\n";
-    activehand.display();
-    cout<<"Passive Player\n";
-    passivehand.display();
     card temp;
     while(window.isOpen()){
         ///draw window, put in some text asking to choose a card
@@ -320,7 +315,6 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
                                 n=userinput.mouseButton.x/54;
                                 temp=activehand.returnbyint(n);
                                 hascard=passivehand.searchface(temp.face);
-                                cout<<endl<<n<<"  "<<temp.filename<<endl;
                                 cont=0;
                                 //window.close();
                             }
@@ -334,7 +328,6 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
                                 n=(1366-userinput.mouseButton.x)/54;
                                 temp=activehand.returnbyint(n);
                                 hascard=passivehand.searchface(temp.face);
-                                cout<<endl<<n<<"  "<<temp.filename<<endl;
                                 cont=0;
                                 //window.close();
                             }
@@ -382,7 +375,6 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
     }
        for(int i=1;i<14;++i){
            if(activehand.check4ofakind(i)){
-               cout<<"4ofkind dectected\n";
                activecollection.push(activehand.remove(i));//if player has 4 of a kind for face i, add it to collection
                 while(activehand.searchface(i)){//while they still have cards of that facce, remove them
                 activehand.remove(i);
@@ -404,10 +396,8 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
         window.display();
         while(window.pollEvent(userinput)){
             if(userinput.type==sf::Event::KeyPressed){
-                cout<<"Key Pressed\n";
                 if(userinput.key.code==sf::Keyboard::Return){
                     cont=0;
-                    cout<<"Enter Pressed\n";
                 }
             }
         }

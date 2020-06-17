@@ -57,10 +57,8 @@ int main(){
                 window.display();
                 while(window.pollEvent(userinput)){
                     if(userinput.type==sf::Event::KeyPressed){
-                        cout<<"Key Pressed\n";
                         if(userinput.key.code==sf::Keyboard::Escape){
                             cont=0;
-                            cout<<"Enter Pressed\n";
                         }
                     }
                 }
@@ -94,10 +92,8 @@ int main(){
                 window.display();
                 while(window.pollEvent(userinput)){
                     if(userinput.type==sf::Event::KeyPressed){
-                        cout<<"Key Pressed\n";
                         if(userinput.key.code==sf::Keyboard::Escape){
                             cont=0;
-                            cout<<"Enter Pressed\n";
                         }
                     }
                 }

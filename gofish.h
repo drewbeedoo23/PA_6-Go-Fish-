@@ -25,6 +25,15 @@ class deck{
         int numbercards;
     public:
         void displaycards();
+        /*************************************************************
+        * Function: check4ofakind()
+        * Date Created:7/12/2020
+        * Date Last Modified: 7/12/2020
+        * Returns: none
+        * Description: writes the cards in a deck to the terminal
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
         deck();
         ~deck();
         void initializefromfile();
@@ -107,8 +116,26 @@ class deck{
         * Preconditions:
         * Postconditions:
         *************************************************************/
-       int getnumcards(); 
+       int getnumcards();
+        /*************************************************************
+        * Function: getnumcards())
+        * Date Created:7/12/2020
+        * Date Last Modified: 7/12/2020
+        * Returns: an integer
+        * Description: returns the number of cards
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/ 
        card returnbyint(int n);
+        /*************************************************************
+        * Function: returnbyint()
+        * Date Created:7/12/2020
+        * Date Last Modified: 7/12/2020
+        * Returns: the nth card
+        * Description: returns the nth card
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
 };
 
 class hand:public deck{
@@ -146,6 +173,15 @@ class hand:public deck{
         * Postconditions:
         *************************************************************/
         void drawbacks(sf::RenderWindow& window,int player);
+        /*************************************************************
+        * Function: check4ofakind()
+        * Date Created:7/12/2020
+        * Date Last Modified: 7/12/2020
+        * Returns: nothing
+        * Description: draws the backs of cards
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
         int check4ofakind(int face);
         /*************************************************************
         * Function: check4ofakind()
@@ -181,6 +217,15 @@ class collected:public deck{
         ~collected();
         void draw(sf::RenderWindow&window, int player, cardnode*ptr);
         void draw(sf::RenderWindow&window,int player);
+        /*************************************************************
+        * Function: draw()
+        * Date Created:7/12/2020
+        * Date Last Modified: 7/12/2020
+        * Returns: 
+        * Description: recursively draws the cards in a players collection
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
 };
 
 void playerturn(hand& activehand,hand& passivehand,collected& activecollection,collected& passivecollection, deck& Deck,sf::RenderWindow &window,int player);
