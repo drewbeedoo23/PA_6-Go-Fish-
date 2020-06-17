@@ -49,10 +49,10 @@ int main(){
                 window.draw(board);
                 window.draw(text);
                 Deck.draw(window);
-                p1.draw(window);
+                p1.draw(window,1);
                 p1coll.draw(window,1);
                 p2coll.draw(window,2);
-                p2.drawbacks(window);
+                p2.drawbacks(window,1);
                 window.display();
                 while(window.pollEvent(userinput)){
                     if(userinput.type==sf::Event::KeyPressed){
@@ -86,10 +86,10 @@ int main(){
                 window.draw(board);
                 window.draw(text);
                 Deck.draw(window);
-                p2.draw(window);
-                p2coll.draw(window,1);
-                p1.drawbacks(window);
-                p1coll.draw(window,2);
+                p2.draw(window,2);
+                p2coll.draw(window,2);
+                p1.drawbacks(window,1);
+                p1coll.draw(window,1);
                 window.display();
                 while(window.pollEvent(userinput)){
                     if(userinput.type==sf::Event::KeyPressed){

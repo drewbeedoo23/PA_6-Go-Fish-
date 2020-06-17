@@ -153,7 +153,7 @@ void deck::draw(sf::RenderWindow& window){
     window.draw(deckback);
     
 }
-void hand::draw(cardnode* ptr,sf::RenderWindow& window){
+void hand::draw(cardnode* ptr,sf::RenderWindow& window, int player){
     static int i =1;
     if(ptr==nullptr||i>numbercards){
         i=1;
@@ -164,13 +164,16 @@ void hand::draw(cardnode* ptr,sf::RenderWindow& window){
     sf::Sprite carddisplay(t);
     carddisplay.setTexture(t);
     carddisplay.setScale(0.078148f,0.080492f);
-    carddisplay.setPosition((i*54),(0));
+    if(player==1)
+        carddisplay.setPosition((i*54),(0));
+    else
+        carddisplay.setPosition((1366-(1+i)*54),(683));
     window.draw(carddisplay);
     ++i;
     ptr = ptr->next;
-    draw(ptr,window);
+    draw(ptr,window,player);
 }
-void hand::draw(sf::RenderWindow& window){
+void hand::draw(sf::RenderWindow& window,int player){
     cardnode* temp = head;
     if(temp==nullptr){
         return;
@@ -180,10 +183,13 @@ void hand::draw(sf::RenderWindow& window){
     sf::Sprite carddisplay(t);
     carddisplay.setTexture(t);
     carddisplay.setScale(0.078148f,0.080492f);
-    carddisplay.setPosition((0),(0));
+    if(player==1)
+        carddisplay.setPosition((0),(0));
+    else
+        carddisplay.setPosition((1312),(683));
     window.draw(carddisplay);
     temp = temp->next;
-    draw(temp,window);
+    draw(temp,window,player);
 }
 
 void collected::draw(sf::RenderWindow&window, int player, cardnode*ptr){
@@ -230,7 +236,7 @@ void collected::draw(sf::RenderWindow&window,int player){
     draw(window, player, temp);
 
 }
-void hand::drawbacks(sf::RenderWindow& window){
+void hand::drawbacks(sf::RenderWindow& window, int player){
     for(int i = 0; i<numbercards; i++){
     if(numbercards == 0){
         return;
@@ -239,7 +245,10 @@ void hand::drawbacks(sf::RenderWindow& window){
     t.loadFromFile("gray_back.png");
     sf::Sprite carddisplay(t);
     carddisplay.setScale(0.078148f,0.080492f);
+    if(player==1)
     carddisplay.setPosition((1366-(1+i)*54),(683));
+    else
+    carddisplay.setPosition((0+(i)*54),(0));
     window.draw(carddisplay);
     }
     
@@ -288,7 +297,7 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
         }
         window.draw(board);
         Deck.draw(window);
-        activehand.draw(window);
+        activehand.draw(window,player);
         if(player==1){
             text.setString("Player 1's turn, choose a card...");
         }
@@ -297,24 +306,41 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
             text.setString("Player 2's turn, choose a card...");
         }
         window.draw(text);
-        passivehand.drawbacks(window);
-        activecollection.draw(window,1);
-        passivecollection.draw(window,2);
+        passivehand.drawbacks(window,player);
+        activecollection.draw(window,player);
+        passivecollection.draw(window,player-1);
         window.display();
         //display window
         while(window.pollEvent(userinput)){
             if(userinput.type==sf::Event::MouseButtonPressed){
-                if(userinput.mouseButton.button==sf::Mouse::Left){
-                    if(userinput.mouseButton.x>=0&&userinput.mouseButton.x<=(54*activehand.getnumcards())){
-                        if(userinput.mouseButton.y>=0&&userinput.mouseButton.y<=(85)){
-                            n=userinput.mouseButton.x/54;
-                            temp=activehand.returnbyint(n);
-                            hascard=passivehand.searchface(temp.face);
-                            cout<<endl<<n<<"  "<<temp.filename<<endl;
-                            cont=0;
-                            //window.close();
+                if(player==1){
+                    if(userinput.mouseButton.button==sf::Mouse::Left){
+                        if(userinput.mouseButton.x>=0&&userinput.mouseButton.x<=(54*activehand.getnumcards())){
+                            if(userinput.mouseButton.y>=0&&userinput.mouseButton.y<=(85)){
+                                n=userinput.mouseButton.x/54;
+                                temp=activehand.returnbyint(n);
+                                hascard=passivehand.searchface(temp.face);
+                                cout<<endl<<n<<"  "<<temp.filename<<endl;
+                                cont=0;
+                                //window.close();
+                            }
                         }
                     }
+                }
+                else{
+                    if(userinput.mouseButton.button==sf::Mouse::Left){
+                        if(userinput.mouseButton.x<=1366&&userinput.mouseButton.x>=(1366-54*activehand.getnumcards())){
+                            if(userinput.mouseButton.y<=768&&userinput.mouseButton.y>=(683)){
+                                n=(1366-userinput.mouseButton.x)/54;
+                                temp=activehand.returnbyint(n);
+                                hascard=passivehand.searchface(temp.face);
+                                cout<<endl<<n<<"  "<<temp.filename<<endl;
+                                cont=0;
+                                //window.close();
+                            }
+                        }
+                    }
+
                 }
             }
         }
@@ -332,8 +358,10 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
         window.draw(board);
         window.draw(text);
         Deck.draw(window);
-        activehand.draw(window);
-        passivehand.drawbacks(window);
+        passivehand.drawbacks(window,player);
+        activehand.draw(window,player);
+        activecollection.draw(window,player);
+        passivecollection.draw(window,player-1);
         window.display();
     }
     else{
@@ -345,8 +373,10 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
         window.draw(board);
         window.draw(text);
         Deck.draw(window);
-        activehand.draw(window);
-        passivehand.drawbacks(window);
+        passivehand.drawbacks(window,player);
+        activehand.draw(window,player);
+        activecollection.draw(window,player);
+        passivecollection.draw(window,player-1);
         window.display();
         
     }
@@ -367,8 +397,10 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
         window.draw(board);
         window.draw(text);
         Deck.draw(window);
-        activehand.draw(window);
-        passivehand.drawbacks(window);
+        passivehand.drawbacks(window,player);
+        activehand.draw(window,player);
+        activecollection.draw(window,player);
+        passivecollection.draw(window,player-1);
         window.display();
         while(window.pollEvent(userinput)){
             if(userinput.type==sf::Event::KeyPressed){

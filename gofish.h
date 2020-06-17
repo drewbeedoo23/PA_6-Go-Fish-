@@ -134,8 +134,8 @@ class hand:public deck{
         * Preconditions: 
         * Postconditions:
         *************************************************************/
-        void draw(sf::RenderWindow& window);
-        void draw(cardnode* ptr,sf::RenderWindow& window);
+        void draw(sf::RenderWindow& window,int player);
+        void draw(cardnode* ptr,sf::RenderWindow& window,int player);
         /*************************************************************
         * Function: draw()
         * Date Created:7/12/2020
@@ -145,8 +145,7 @@ class hand:public deck{
         * Preconditions: 
         * Postconditions:
         *************************************************************/
-        void drawbacks(sf::RenderWindow& window);
-        void drawbacks(cardnode* ptr, sf::RenderWindow& window);
+        void drawbacks(sf::RenderWindow& window,int player);
         int check4ofakind(int face);
         /*************************************************************
         * Function: check4ofakind()
