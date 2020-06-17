@@ -32,10 +32,11 @@ int main(){
     sf::RectangleShape board(sf::Vector2f(1366.f,768.f));
     board.setTexture(&felt);
     board.setPosition(0,0);
+    mainmenu(window);
     while(window.isOpen()){
         playerturn(p1,p2,p1coll,p2coll,Deck,window,1);
         if(checkwin(p1coll,p2coll)){
-            if(p1.getnumcards()>p2.getnumcards()){
+            if(p1coll.getnumcards()>p2coll.getnumcards()){
                 text.setString("Player 1 wins! Press Escape to exit:");
             }
             else{
@@ -71,7 +72,7 @@ int main(){
         }
         playerturn(p2,p1,p2coll,p1coll,Deck,window,2);
         if(checkwin(p1coll,p2coll)){
-            if(p1.getnumcards()>p2.getnumcards()){
+            if(p1coll.getnumcards()>p2coll.getnumcards()){
                 text.setString("Player 1 wins! Press Escape to exit:");
 
             }

@@ -420,3 +420,101 @@ bool checkwin(collected& p1, collected& p2){
     }
     return true;
 }
+void rules(sf::RenderWindow& window){
+    sf::Texture ocean;
+    ocean.loadFromFile("ocean.jpg");
+    sf::RectangleShape board(sf::Vector2f(1366.f,768.f));
+    board.setTexture(&ocean);
+    board.setPosition(0,0);
+    int cont=0;
+    sf::Text text;
+    sf::Event userinput;
+    sf::Font font;
+    font.loadFromFile("Amatic-Bold.ttf");
+    text.setFont(font);
+    text.setCharacterSize(50);
+    text.setFillColor(sf::Color::Black);
+    text.setStyle(sf::Text::Regular);
+    text.setPosition(250,240);
+    text.setString("Each player takes turn guessing if the other player has a card they have.\n"
+                    "To do this, the active player clicks on a card in their hand\n"
+                    "If they do, they get that card. Otherwise they draw. At the end of each\n"
+                    "turn any four of a kinds are placed on the table. The player to get the most\n"
+                    "four of a kinds when the deck runs out, wins. Press Enter to return to main menu.");
+    while(window.isOpen()){
+        if(cont==1){
+            break;
+        }
+        window.draw(board);
+        window.draw(text);
+        window.display();
+            while(window.pollEvent(userinput)){
+                if(userinput.type==sf::Event::KeyPressed){
+                    if(userinput.key.code==sf::Keyboard::Return){
+                        return;
+                    }
+
+                }
+                    
+            }
+
+    }
+}
+
+void mainmenu(sf::RenderWindow& window){
+    sf::Texture ocean;
+    ocean.loadFromFile("ocean.jpg");
+    sf::RectangleShape board(sf::Vector2f(1366.f,768.f));
+    board.setTexture(&ocean);
+    board.setPosition(0,0);
+    int cont=1;
+    sf::Text text;
+    sf::Event userinput;
+    sf::Font font;
+    font.loadFromFile("Amatic-Bold.ttf");
+    text.setFont(font);
+    text.setCharacterSize(50);
+    text.setFillColor(sf::Color::Black);
+    text.setStyle(sf::Text::Regular);
+    text.setPosition(400,340);
+    text.setString("1. Play\n2.Rules\n3.Exit");
+    while(window.isOpen()){
+        if(cont==0){
+            break;
+        }
+        window.draw(board);
+        window.draw(text);
+        window.display();
+            while(window.pollEvent(userinput)){
+                if(userinput.type==sf::Event::KeyPressed){
+                    switch(userinput.key.code){
+                        case sf::Keyboard::Num1:
+                            cont=0;
+                            break;
+                        case sf::Keyboard::Numpad1:
+                            cont=0;
+                            break;
+                        case sf::Keyboard::Num2:
+                            rules(window);
+                            mainmenu(window);
+                            break;
+                        case sf::Keyboard::Numpad2:
+                            rules(window);
+                            mainmenu(window);
+                            break;
+                        case sf::Keyboard::Num3:
+                            window.close();
+                            break;
+                        case sf::Keyboard::Numpad3:
+                            window.close();
+                            break;
+                        
+                    }
+                }
+
+        }
+    }
+
+
+
+}

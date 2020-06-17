@@ -195,5 +195,26 @@ void playerturn(hand& activehand,hand& passivehand,collected& activecollection,c
         *************************************************************/
 
 bool checkwin(collected& p1, collected& p2);
+void rules(sf::RenderWindow& window);
+        /*************************************************************
+        * Function: rules()
+        * Date Created:6/16/2020
+        * Date Last Modified: 6/16/2020
+        * Returns: nothing
+        * Description: displays the rules
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
+
+void mainmenu(sf::RenderWindow& window);
+        /*************************************************************
+        * Function: mainmenu()
+        * Date Created:6/16/2020
+        * Date Last Modified: 6/16/2020
+        * Returns: nothing
+        * Description: displays the mainmenu
+        * Preconditions: 
+        * Postconditions:
+        *************************************************************/
 #include "gofish.cpp"
 #endif
